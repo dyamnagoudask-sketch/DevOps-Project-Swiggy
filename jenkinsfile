@@ -15,7 +15,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git 'https://github.com/Pramod-project/DevOps-Project-Swiggy.git'
+                git 'https://github.com/dyamnagoudask-sketch/DevOps-Project-Swiggy.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -54,20 +54,20 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker'){   
                        sh "docker build -t swiggy ."
-                       sh "docker tag swiggy pramod9901/swiggy:latest "
-                       sh "docker push pramod9901/swiggy:latest "
+                       sh "docker tag swiggy akasha123/swiggy:latest "
+                       sh "docker push akasha123/swiggy:latest "
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image pramod9901/swiggy:latest > trivy.txt" 
+                sh "trivy image akasha123/swiggy:latest > trivy.txt" 
             }
         }
         stage('Deploy to container'){
             steps{
-                sh 'docker run -d --name swiggy -p 3000:3000 pramod9901/swiggy:latest'
+                sh 'docker run -d --name swiggy -p 3000:3000 akasha123/swiggy:latest'
             }
         }
     }
